@@ -95,8 +95,30 @@ class BaseMultiModalMixImageTransform(BaseTransform, metaclass=ABCMeta):
         mix_texts = sum(
             [results['texts']] +
             [x['texts'] for x in results['mix_results']], [])
-        mix_texts = list({tuple(x) for x in mix_texts})
-        text2id = {text: i for i, text in enumerate(mix_texts)}
+        # print('sum: ', mix_texts)
+        text2id = {tuple(text): i for i, text in enumerate(mix_texts)}
+        id2text = {i: tuple(text) for i, text in enumerate(mix_texts)}
+        
+        mix_texts = [id2text[x] for x in range(len(id2text))]
+        # print('list_tuple: ', mix_texts)
+        # , results['mix_results']
+        # text2id = {text: i for i, text in enumerate(mix_texts)}
+        # print(text2id)
+        
+        if 'audio' in results:
+            mix_audio = sum(
+                [results['audio']] +
+                [x['audio'] for x in results['mix_results']], [])
+            # print(results['audio'], mix_audio)
+            id2audio = {i: tuple(x) for i, x in enumerate(mix_audio)}
+        
+            # mix_texts = [id2text[x] for x in range(len(id2text))]
+            mix_audio = [id2audio[x] for x in range(len(id2audio))]
+            
+            # mix_audio = list({tuple(x) for x in mix_audio})
+            
+        # print(results['mix_results'])
+            # print(results['audio'], mix_audio)
 
         for res in [results] + results['mix_results']:
             for i, label in enumerate(res['gt_bboxes_labels']):
@@ -104,6 +126,9 @@ class BaseMultiModalMixImageTransform(BaseTransform, metaclass=ABCMeta):
                 updated_id = text2id[tuple(text)]
                 res['gt_bboxes_labels'][i] = updated_id
             res['texts'] = mix_texts
+            if 'audio' in results:
+                res['audio'] = mix_audio
+                
         return results
 
     @autocast_box_type()

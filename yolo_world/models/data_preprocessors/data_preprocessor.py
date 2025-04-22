@@ -33,6 +33,11 @@ class YOLOWDetDataPreprocessor(DetDataPreprocessor):
             dict: Data in the same format as the model input.
         """
         if not training:
+            # print(type(data))
+            if isinstance(data['data_samples'], list) and 'audio' in data['data_samples'][0]:
+                for sample in data['data_samples']:
+                    audio = sample.pop('audio')
+                    sample.audio = audio
             return super().forward(data, training)
 
         data = self.cast_data(data)
@@ -57,6 +62,11 @@ class YOLOWDetDataPreprocessor(DetDataPreprocessor):
         }
         if 'masks' in data_samples:
             data_samples_output['masks'] = data_samples['masks']
+        
+        # print(data_samples.keys())
+        if 'audio' in data_samples:
+            data_samples_output['audio'] = data_samples['audio']
+
         if 'is_detection' in data_samples:
             data_samples_output['is_detection'] = data_samples['is_detection']
 

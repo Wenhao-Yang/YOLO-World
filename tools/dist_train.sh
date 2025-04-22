@@ -17,3 +17,5 @@ python -m torch.distributed.launch \
     $(dirname "$0")/train.py \
     $CONFIG \
     --launcher pytorch ${@:3}
+
+TORCH_DISTRIBUTED_DEBUG=INFO CUDA_VISIBLE_DEVICES=0,1,2,3 OMP_NUM_THREADS=8 torchrun --nproc_per_node=4 --master_port=41705 --nnodes=1 tools/train.py configs/pretrain/yolo_world_v2_audio32k_obj365_fineaudio_fast_align.py --launcher pytorch --amp

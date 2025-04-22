@@ -1,4 +1,7 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+import warnings
+warnings.filterwarnings("ignore")
+
 import argparse
 import logging
 import os

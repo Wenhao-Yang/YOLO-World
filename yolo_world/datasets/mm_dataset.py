@@ -17,6 +17,7 @@ class MultiModalDataset:
     def __init__(self,
                  dataset: Union[BaseDataset, dict],
                  class_text_path: str = None,
+                 class_audio_path: str = None,
                  test_mode: bool = True,
                  pipeline: List[Union[dict, Callable]] = [],
                  lazy_init: bool = False) -> None:
@@ -38,6 +39,11 @@ class MultiModalDataset:
             #      'file must be the same.')
         else:
             self.class_texts = None
+
+        if class_audio_path is not None:
+            self.class_audios = json.load(open(class_audio_path, 'r'))
+        else:
+            self.class_audios = None
 
         self.test_mode = test_mode
         self._metainfo = self.dataset.metainfo
@@ -66,6 +72,10 @@ class MultiModalDataset:
         data_info = self.dataset.get_data_info(idx)
         if self.class_texts is not None:
             data_info.update({'texts': self.class_texts})
+
+        if self.class_audios is not None:
+            data_info.update({'audio': self.class_audios})
+
         return data_info
 
     def __getitem__(self, idx):

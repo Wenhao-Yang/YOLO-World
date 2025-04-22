@@ -74,8 +74,13 @@ class YOLOWv5OptimizerConstructor(DefaultOptimWrapperConstructor):
                     logger='current',
                     level=logging.WARNING)
                 continue
+
             if not param.requires_grad:
-                params.append(param_group)
+                print_log((f'{prefix}.{name} is skipped since its '
+                           f'requires_grad={param.requires_grad}'),
+                          logger='current',
+                          level=logging.WARNING)
+                # params.append(param_group)
                 continue
 
             # if the parameter match one of the custom keys, ignore other rules
