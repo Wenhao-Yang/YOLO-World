@@ -61,7 +61,13 @@ class YOLOWorldDetector(YOLODetector):
     def reparameterize(self, texts: List[List[str]]) -> None:
         # encode text embeddings into the detector
         self.texts = texts
-        self.text_feats, None = self.backbone.forward_text(texts)
+        text_output = self.backbone.forward_text(texts)
+        if isinstance(text_output, tuple):
+            self.text_feats = text_output[0]
+        else:
+            self.text_feats = text_output
+
+        # self.text_feats, _ = self.backbone.forward_text(texts)
 
     def _forward(
             self,
