@@ -23,7 +23,7 @@ load_from = 'pretrained/audio_ckp_mix.pth'
 
 # img_scale = (1280, 1280)
 img_scale = _base_.img_scale
-audio_model_fp = './SpeechCLIP/exp/coco/relate0/epoch=22-step=49999-val_recall_mean_10=76.5962.ckpt'
+audio_model_fp = '../SpeechCLIP/slt_ckpts/SpeechCLIP/base/flickr/parallel/epoch_131-step_15443-val_recall_mean_1_36.0100.ckpt'
 
 # model settings
 model = dict(
