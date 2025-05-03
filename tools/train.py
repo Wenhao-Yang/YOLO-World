@@ -1,6 +1,8 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import warnings
 warnings.filterwarnings("ignore")
+import sys
+sys.path.append('../SpeechCLIP')
 
 import argparse
 import logging
