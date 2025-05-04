@@ -148,7 +148,7 @@ class AudioYOLOWorldDetector(YOLODetector):
                     param.requires_grad = False
 
     def loss(self, batch_inputs: Tensor,
-             batch_data_samples: SampleList) -> Union[dict, list]:
+             batch_data_samples: SampleList = None) -> Union[dict, list]:
         """Calculate losses from a batch of inputs and data samples."""
         self.bbox_head.num_classes = self.num_train_classes
         img_feats, audio_feats = self.extract_feat(batch_inputs,
