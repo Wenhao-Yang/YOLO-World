@@ -10,7 +10,6 @@ from mmyolo.registry import MODELS
 CastData = Union[tuple, dict, BaseDataElement, torch.Tensor, list, bytes, str,
                  None]
 
-
 @MODELS.register_module()
 class YOLOWDetDataPreprocessor(DetDataPreprocessor):
     """Rewrite collate_fn to get faster training speed.
